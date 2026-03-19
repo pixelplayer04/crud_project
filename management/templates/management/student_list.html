@@ -1,0 +1,61 @@
+{% extends "management/base.html" %}
+
+{% block content %}
+
+<h2>Estudiantes</h2>
+
+<button class="btn btn-primary"
+data-bs-toggle="modal"
+data-bs-target="#createModal">
+
+Nuevo estudiante
+
+</button>
+
+<br><br>
+
+<table class="table table-bordered">
+
+<tr>
+<th>Nombre</th>
+<th>Email</th>
+<th>Fecha</th>
+<th>Acciones</th>
+</tr>
+
+{% for s in students %}
+
+<tr>
+
+<td>{{ s.first_name }} {{ s.last_name }}</td>
+
+<td>{{ s.email }}</td>
+
+<td>{{ s.enrollment_date }}</td>
+
+<td>
+
+<button class="btn btn-warning"
+data-bs-toggle="modal"
+data-bs-target="#edit{{ s.id }}">
+Editar
+</button>
+
+<a href="{% url 'student_delete' s.id %}"
+class="btn btn-danger">
+Eliminar
+</a>
+
+</td>
+
+</tr>
+
+{% include "management/modals_student.html" %}
+
+{% endfor %}
+
+</table>
+
+{% include "management/modals_student.html" %}
+
+{% endblock %}

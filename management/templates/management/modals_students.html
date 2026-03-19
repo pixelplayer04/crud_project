@@ -1,0 +1,99 @@
+<!-- CREATE -->
+
+<div class="modal fade" id="createModal">
+
+<div class="modal-dialog">
+
+<div class="modal-content">
+
+<form method="post"
+action="{% url 'student_create' %}">
+
+{% csrf_token %}
+
+<div class="modal-header">
+
+<h5>Nuevo estudiante</h5>
+
+</div>
+
+<div class="modal-body">
+
+{{ form.as_p }}
+
+</div>
+
+<div class="modal-footer">
+
+<button class="btn btn-success">
+Guardar
+</button>
+
+</div>
+
+</form>
+
+</div>
+</div>
+</div>
+
+
+
+<!-- EDIT -->
+
+{% for s in students %}
+
+<div class="modal fade" id="edit{{ s.id }}">
+
+<div class="modal-dialog">
+
+<div class="modal-content">
+
+<form method="post"
+action="{% url 'student_update' s.id %}">
+
+{% csrf_token %}
+
+<div class="modal-header">
+Editar
+</div>
+
+<div class="modal-body">
+
+<input type="text"
+name="first_name"
+value="{{ s.first_name }}"
+class="form-control">
+
+<input type="text"
+name="last_name"
+value="{{ s.last_name }}"
+class="form-control">
+
+<input type="email"
+name="email"
+value="{{ s.email }}"
+class="form-control">
+
+<input type="date"
+name="enrollment_date"
+value="{{ s.enrollment_date }}"
+class="form-control">
+
+</div>
+
+<div class="modal-footer">
+
+<button class="btn btn-success">
+Guardar
+</button>
+
+</div>
+
+</form>
+
+</div>
+</div>
+</div>
+
+{% endfor %}
