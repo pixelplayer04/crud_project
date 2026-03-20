@@ -1,26 +1,38 @@
 <div class="modal fade" id="createModal">
-
-<div class="modal-dialog">
-
-<div class="modal-content">
-
-<form method="post"
-action="{% url 'course_create' %}">
-
-{% csrf_token %}
-
-<div class="modal-body">
-
-{{ form.as_p }}
-
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="{% url 'course_create' %}">
+                {% csrf_token %}
+                <div class="modal-header"><h5>Nuevo curso</h5></div>
+                <div class="modal-body">{{ form.as_p }}</div>
+                <div class="modal-footer"><button class="btn btn-success">Guardar</button></div>
+            </form>
+        </div>
+    </div>
 </div>
 
-<button class="btn btn-success">
-Guardar
-</button>
-
-</form>
-
+{% for c in courses %}
+<div class="modal fade" id="edit{{ c.id }}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="{% url 'course_update' c.id %}">
+                {% csrf_token %}
+                <div class="modal-header"><h5>Editar curso</h5></div>
+                <div class="modal-body">
+                    <input type="text" name="name" value="{{ c.name }}" class="form-control mb-2" required>
+                    <input type="text" name="code" value="{{ c.code }}" class="form-control mb-2" required>
+                    <input type="date" name="start_date" value="{{ c.start_date }}" class="form-control mb-2" required>
+                    <select name="student" class="form-control" required>
+                        {% for s in students %}
+                        <option value="{{ s.id }}" {% if s.id == c.student_id %}selected{% endif %}>
+                            {{ s.first_name }} {{ s.last_name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="modal-footer"><button class="btn btn-success">Guardar</button></div>
+            </form>
+        </div>
+    </div>
 </div>
-</div>
-</div>
+{% endfor %}
